@@ -1,0 +1,195 @@
+@import "tailwindcss";
+
+:root {
+  --font-display:
+    "SF Pro Display", "Inter Tight", "Helvetica Neue", "Segoe UI", -apple-system,
+    BlinkMacSystemFont, sans-serif;
+  --font-body:
+    "SF Pro Text", "Inter", "Helvetica Neue", "Segoe UI", -apple-system,
+    BlinkMacSystemFont, sans-serif;
+  --background: #0d0e11;
+  --foreground: #f2f3f5;
+  --surface: rgba(255, 255, 255, 0.045);
+  --surface-strong: rgba(255, 255, 255, 0.068);
+  --surface-soft: rgba(255, 255, 255, 0.035);
+  --border: rgba(255, 255, 255, 0.09);
+  --border-strong: rgba(255, 255, 255, 0.16);
+  --accent: #c4ccd6;
+  --accent-soft: #9ba7b4;
+  --accent-secondary: #a8b6c5;
+  --muted-foreground: rgba(231, 235, 239, 0.7);
+  --shadow-soft: 0 24px 80px rgba(0, 0, 0, 0.22);
+  --shadow-strong: 0 22px 90px rgba(0, 0, 0, 0.28);
+  --theme-toggle-glow: rgba(255, 255, 255, 0.05);
+  --selection: rgba(196, 204, 214, 0.26);
+}
+
+html[data-theme="light"] {
+  --background: #f5f2ee;
+  --foreground: #161718;
+  --surface: rgba(255, 255, 255, 0.76);
+  --surface-strong: rgba(255, 255, 255, 0.88);
+  --surface-soft: rgba(255, 255, 255, 0.64);
+  --border: rgba(28, 32, 38, 0.08);
+  --border-strong: rgba(28, 32, 38, 0.12);
+  --accent: #36414d;
+  --accent-soft: #778391;
+  --accent-secondary: #5d6672;
+  --muted-foreground: rgba(54, 58, 64, 0.7);
+  --shadow-soft: 0 18px 50px rgba(36, 38, 42, 0.08);
+  --shadow-strong: 0 24px 60px rgba(36, 38, 42, 0.11);
+  --theme-toggle-glow: rgba(0, 0, 0, 0.03);
+  --selection: rgba(120, 132, 145, 0.2);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background:
+    radial-gradient(circle at top left, rgba(255, 255, 255, 0.05), transparent 24%),
+    radial-gradient(circle at 80% 0%, rgba(169, 176, 186, 0.08), transparent 20%),
+    linear-gradient(180deg, #0d0e11 0%, #101114 40%, #121316 100%);
+  color: var(--foreground);
+  transition:
+    background-color 240ms ease,
+    color 240ms ease;
+}
+
+html[data-theme="light"] body {
+  background:
+    radial-gradient(circle at top left, rgba(255, 255, 255, 0.95), transparent 26%),
+    radial-gradient(circle at 82% 2%, rgba(210, 214, 220, 0.3), transparent 22%),
+    linear-gradient(180deg, #faf8f5 0%, #f4f1ed 100%);
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.015), transparent 18%),
+    radial-gradient(circle at center, transparent 52%, rgba(0, 0, 0, 0.16) 100%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+::selection {
+  background: var(--selection);
+}
+
+a,
+button {
+  cursor: none;
+}
+
+@media (pointer: coarse) {
+  a,
+  button {
+    cursor: pointer;
+  }
+}
+
+.glass-panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-soft);
+  backdrop-filter: blur(22px);
+}
+
+.glass-panel-strong {
+  background: var(--surface-strong);
+  border: 1px solid var(--border-strong);
+  box-shadow: var(--shadow-strong);
+  backdrop-filter: blur(24px);
+}
+
+.section-shell {
+  position: relative;
+  margin-inline: auto;
+  width: min(1180px, calc(100% - 1.5rem));
+}
+
+.animated-border {
+  position: relative;
+  isolation: isolate;
+}
+
+.animated-border::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.16),
+      rgba(255, 255, 255, 0.05) 35%,
+      rgba(125, 132, 145, 0.16) 100%
+    );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  z-index: -1;
+}
+
+.soft-grid {
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 34px 34px;
+}
+
+html[data-theme="light"] .soft-grid {
+  background-image:
+    linear-gradient(to right, rgba(15, 18, 22, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(15, 18, 22, 0.04) 1px, transparent 1px);
+}
+
+@keyframes shimmer {
+  from {
+    background-position: 0% 50%;
+  }
+  to {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes float-gentle {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -8px, 0);
+  }
+}
+
+.text-gradient {
+  background-image: linear-gradient(120deg, #ffffff 0%, #b7c0cb 45%, #848f9d 100%);
+  background-size: 180% 180%;
+  animation: shimmer 10s ease-in-out infinite alternate;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+html[data-theme="light"] .text-gradient {
+  background-image: linear-gradient(120deg, #151719 0%, #505963 45%, #818b97 100%);
+}
+
+.hero-name {
+  letter-spacing: -0.06em;
+}
+
+.subtle-float {
+  animation: float-gentle 8s ease-in-out infinite;
+}
